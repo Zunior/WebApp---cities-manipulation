@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <%@page import="view.ViewLogin"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 <meta charset="ISO-8859-1">
@@ -44,22 +46,13 @@
 </head>
 <body>
 
-	<%
-// 		ViewLogin viewLogin;
-// 		if(session.getAttribute("viewLogin")!=null) 
-// 			viewLogin = (ViewLogin)session.getAttribute("viewLogin");
-// 		else 
-// 			viewLogin = new ViewLogin("", "", "Upisite trazene podatke");
-
-		String errorMessage = (String)request.getAttribute("errorMessage");
-		if(errorMessage == null)
-			errorMessage = "";
-	%>
-
+	<c:set value="${pageContext.request.contextPath}" var="contextPath"></c:set>
+	
+	<c:url var="loginURL" value="../${contextPath}/LoginServlet"/>
 
 	<div class="flex-container">
 		<div class="Login-form">
-			<form method="post" action="../WebAplikacija/LoginServlet">
+			<form method="post" action="<c:out value="${loginURL}"/>">
 				<div>
 					<label>Username:</label> 
 					<input id="username" name="username" type="text" />
@@ -70,7 +63,8 @@
 					<input id="password" name="password" type="password" /> 
 					<input type="submit" value="Login" />
 				</div>
-				<%=errorMessage %>
+				<c:out value="${errorMessage}"></c:out>
+				
 			</form>
 		</div>
 	</div>

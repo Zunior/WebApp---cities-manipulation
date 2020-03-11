@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,16 +50,12 @@
 </style>
 </head>
 <body>
-
-	<%
-	String errorMessage = (String) request.getAttribute("errorMessage");
-	if(errorMessage == null)
-		errorMessage = "";
-	%>
+	<c:set value="${pageContext.request.contextPath}" var="contextPath"></c:set>
+	<c:url var="dodajURL" value="../${contextPath}/HomeServlet"/>
 
 	<div class="flex-container">
 		<div class="Login-form">
-			<form method="post" action="../WebAplikacija/HomeServlet">
+			<form method="post" action="<c:out value="${dodajURL}"/>">
 				<div>
 					<jsp:include page="UserLogout.jsp"></jsp:include>
 				</div>
@@ -76,7 +73,7 @@
 					<label for="cityNumber">City number:</label> 
 					<input id="cityNumber" name="cityNumber"></input>
 				</div>
-				<%=errorMessage %>
+				<c:out value="${errorMessage} }" />
 				<br />
 				<div>
 					<button type="submit" value="Add" class="btn btn-primary" >Add</button>

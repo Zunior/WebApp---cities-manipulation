@@ -1,6 +1,7 @@
 <%@page import="domain.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,13 +21,12 @@
 </style>
 </head>
 <body>
-	<%
-		User currentUser = (domain.User)session.getAttribute("currentUser");
-	%>
+	<c:set value="${pageContext.request.contextPath}" var="contextPath"></c:set>
+	<c:url var="loginURL" value="../${contextPath}/LoginServlet" />
 
-	<div>Login user: <%=currentUser.getName() %></div>
+	<div>Login user: <c:out value="${currentUser.getName()}" /></div>
 	<div>
-		<a href="../WebAplikacija/LoginServlet">Logout</a>
+		<a href="<c:out value="${loginURL}" />">Logout</a>
 	</div>
 	<div>
 		<a href="Home.jsp">back</a>

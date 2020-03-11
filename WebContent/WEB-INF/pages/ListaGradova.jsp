@@ -2,6 +2,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,14 +39,12 @@
 </head>
 <body>
 	
-	<% ArrayList<City> cities = (ArrayList<City>)request.getServletContext().getAttribute("cities"); 
-		if(cities == null) 
-			cities = new ArrayList<City>();
-	%>
-	
 <%-- 	<jsp:useBean id="currentUser" class = "domain.User" scope="session"> --%>
 <%-- 		<jsp:setProperty name="currentUser" property="name"></jsp:setProperty> --%>
 <%-- 	</jsp:useBean> --%>
+
+		<c:set value="${pageContext.request.contextPath}" var="contextPath"></c:set>
+		<c:url var="getEdit" value="../${contextPath}/HomeServlet" />
 	
 	<div class="flex-container">
 		<div class="Login-form">
@@ -60,26 +60,24 @@
 						    </tr>
 						</thead>
 							<tbody>
-								<%
-									for (City city: cities){
-								%>
+								<c:forEach items="${cities}" var="city">
 								<tr>
-									<td><%=city.getCityNumber() %></td>
-									<td><%=city.getNaziv() %></td>
+									<td><p>${city.getCityNumber()}</p><br/></td>
+									<td><p>${city.getCityNumber()}</p><br/></td>
 									<td>
-										<form method="get" action="../WebAplikacija/HomeServlet">
-											<input type = "hidden" id="brojGrada" name = "brojGrada" value = "<%=city.getCityNumber() %>" />
+										<form method="get" action="<c:out value="${getEdit}" />">
+											<input type = "hidden" id="brojGrada" name = "brojGrada" value = "${city.getCityNumber()}" />
 											<input type = "submit" id="operacija" name = "operacija" value="delete"/>
 										</form>
 									</td>
 									<td>
 										<form method="get" action="../WebAplikacija/HomeServlet">
-											<input type = "hidden" id="brojGrada" name = "brojGrada" value = "<%=city.getCityNumber() %>" />
+											<input type = "hidden" id="brojGrada" name = "brojGrada" value = "${city.getCityNumber()}" />
 											<input type = "submit" id="operacija" name = "operacija" value="edit"/>
 										</form>
 									</td>
 								</tr>
-								<% } %>
+								</c:forEach>
 							</tbody>
 					</table>
 				</div>
